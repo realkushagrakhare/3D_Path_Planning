@@ -18,5 +18,5 @@ would produce a smooth path.<br>
 ## Technologies used:
 <ul>
 <li>PyGame & POGL</li>
-<li>Scikit, NumPy</li>
+<li>Scikit, NumPy, Scipy</li>
 </ul>
