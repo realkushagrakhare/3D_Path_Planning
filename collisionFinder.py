@@ -11,8 +11,11 @@ def newList(list,start,end):
 		l.append(list[i])
 	return l
 
-def deistnceOfLineFromCircle(a,b,c,circle): # ax+by+c = 0
-	
+def distanceOfLineFromCircle(a,b,c,circle): # ax+by+c = 0
+	x = circle.center.x
+	y = circle.center.y
+	distance = (a*x + b*y + c)/sqrt(a*a + b*b)
+	return distance
 
 def collisionFinderCircularObject(p1,p2,data):
 	#y = mx + c.  ax + by + c = 0.
@@ -21,10 +24,15 @@ def collisionFinderCircularObject(p1,p2,data):
 	m = (p2.y - p1.y)/(p2.x - p1.x)
 	a = m
 	b = -1
+	c = p2.y - (m*p2.x)
 
 	distances = []
 	for i in data:
-		d = 
+		d = distanceOfLineFromCircle(a,b,c,i)
+		if (d <= i.radius):
+		 	return true
+		 	break
+	return false
 
 def collisionFinder(start,end,volume):
 	if(start == end):
