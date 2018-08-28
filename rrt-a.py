@@ -3,10 +3,11 @@ from math import *
 from pygame import *
 
 class Node(object):
-    def __init__(self, point, parent):
+    def __init__(self, point, parent, cost=0):
         super(Node, self).__init__()
         self.point = point
         self.parent = parent
+        self.cost = cost
 
 XDIM = 720
 YDIM = 500
@@ -23,14 +24,14 @@ screen = pygame.display.set_mode(windowSize)
 white = 255, 255, 255
 black = 25, 25, 25
 red = 255, 0, 0
-blue = 0, 255, 0
-green = 0, 0, 128
+blue = 0, 128, 0
+green = 0, 0, 255
 cyan = 0,180,105
 
 count = 0
 rectObs = []
 
-def dist(p1,p2):    #distance between two points
+def dist(p1,p2):
 	return sqrt((p1[0]-p2[0])*(p1[0]-p2[0])+(p1[1]-p2[1])*(p1[1]-p2[1]))
 	
 def manhattan_dist(p1, p2):
@@ -126,14 +127,15 @@ def main():
                     rand = get_random_clear()
                     parentNode = nodes[0]
                     for p in nodes:
-                        if manhattan_dist(p.point,rand) <= manhattan_dist(parentNode.point,rand):
+                        #if manhattan_dist(p.point, goalPoint.point) - dist(p.point,rand) <= manhattan_dist(parentNode.point, goalPoint.point) - dist(parentNode.point,rand):
+                        if manhattan_dist(p.point, goalPoint.point) <= manhattan_dist(parentNode.point, goalPoint.point):
                             newPoint = step_from_to(p.point,rand)
                             if collides(newPoint) == False:
                                 parentNode = p
                                 foundNext = True
 
                 newnode = step_from_to(parentNode.point,rand)
-                nodes.append(Node(newnode, parentNode))
+                nodes.append(Node(newnode, parentNode, dist(newnode, parentNode.point) + parentNode.cost))
                 pygame.draw.line(screen,cyan,parentNode.point,newnode)
 
                 if point_circle_collision(newnode, goalPoint.point, GOAL_RADIUS):
