@@ -1,0 +1,32 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+
+\title{3D Path Planning: Pruning with Constraint Satisfaction  (7A)}
+\author{Kushagra Khare\\
+IMT2015022
+\and Rachit Jain\\
+IMT2015034
+}
+
+\begin{document}
+
+\maketitle
+
+RRT(Rapidly exploring Random Trees) is an algorithm to search a space by randomly building a space-filling tree. The tree is constucted by randomly selecting samples and biased to grow in large unsearched areas.\\
+\\A* algorithm is a graph traversal algorithm,i.e it gives a path between 2 nodes. It uses heuristics to guide it's search which makes it better than Dijkstra's algorithm.\\
+
+RRT-A* is an algorithm where we take the cost function of A* to determine selection of nodes in the RRT algorithm. This algorithm has resulted in a much faster search algorithm ( approximately 10x times faster than RRT). So we have implemented RRT-A* as we will be using this as a search algorithm between start and end points.
+\medskip
+
+\begin{thebibliography}{9}
+\bibitem{a}
+Steven M. LaValle (1998). Rapidly-Exploring Randm Trees: A new tool for Path Planning
+\\\texttt{http://msl.cs.illinois.edu/~lavalle/papers/Lav98c.pdf}
+
+\bibitem{b} 
+Jiadong Li et al. (2014). RRT-A* Motion Planning Algorithm for Non-holonomic Mobile Robot  
+\\\texttt{https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6935304}
+
+\end{thebibliography}
+
+\end{document}
