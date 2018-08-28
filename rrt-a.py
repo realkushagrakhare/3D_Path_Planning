@@ -3,11 +3,10 @@ from math import *
 from pygame import *
 
 class Node(object):
-    def __init__(self, point, parent, cost):
+    def __init__(self, point, parent):
         super(Node, self).__init__()
         self.point = point
         self.parent = parent
-        self.cost = cost
 
 XDIM = 720
 YDIM = 500
@@ -32,7 +31,7 @@ count = 0
 rectObs = []
 
 def dist(p1,p2):    #distance between two points
-	return abs(p1[0]-p2[0])+abs(p1[1]-p2[1])
+	return sqrt((p1[0]-p2[0])*(p1[0]-p2[0])+(p1[1]-p2[1])*(p1[1]-p2[1]))
 	
 def manhattan_dist(p1, p2):
 	return abs(p1[0]-p2[0])+abs(p1[1]-p2[1])
@@ -44,15 +43,13 @@ def point_circle_collision(p1, p2, radius):
     return False
 
 def step_from_to(p1,p2):
-    '''if dist(p1,p2) < delta:
+    if manhattan_dist(p1,p2) < delta:
         return p2
     else:
         theta = atan2(p2[1]-p1[1],p2[0]-p1[0])
-        return p1[0] + delta*cos(theta), p1[1] + delta*sin(theta)'''
-    theta = atan2(p2[1]-p1[1],p2[0]-p1[0])
-    return p1[0] + delta*cos(theta), p1[1] + delta*sin(theta)
+        return p1[0] + delta*cos(theta), p1[1] + delta*sin(theta)
 
-def collides(p):    #check if point collides with the obstacle
+def collides(p):    
     for rect in rectObs:
         if rect.collidepoint(p) == True:
             return True
@@ -97,9 +94,9 @@ def main():
     global count
     
     initPoseSet = False
-    initialPoint = Node(None, None, None)
+    initialPoint = Node(None, None)
     goalPoseSet = False
-    goalPoint = Node(None, None, None)
+    goalPoint = Node(None, None)
     currentState = 'init'
 
     nodes = []
@@ -129,17 +126,17 @@ def main():
                     rand = get_random_clear()
                     parentNode = nodes[0]
                     for p in nodes:
-                        if dist(p.point,rand) + p.cost <= dist(parentNode.point,rand) + parentNode.cost:
+                        if manhattan_dist(p.point,rand) <= manhattan_dist(parentNode.point,rand):
                             newPoint = step_from_to(p.point,rand)
                             if collides(newPoint) == False:
                                 parentNode = p
                                 foundNext = True
 
-                newpoint = step_from_to(parentNode.point,rand)
-                nodes.append(Node(newpoint, parentNode, parentNode.cost + dist(parentNode.point, newpoint)))
-                pygame.draw.line(screen,cyan,parentNode.point,newpoint)
+                newnode = step_from_to(parentNode.point,rand)
+                nodes.append(Node(newnode, parentNode))
+                pygame.draw.line(screen,cyan,parentNode.point,newnode)
 
-                if point_circle_collision(newpoint, goalPoint.point, GOAL_RADIUS):
+                if point_circle_collision(newnode, goalPoint.point, GOAL_RADIUS):
                     currentState = 'goalFound'
 
                     goalNode = nodes[len(nodes)-1]
@@ -160,14 +157,14 @@ def main():
                         if collides(e.pos) == False:
                             print('initiale point set: '+str(e.pos))
 
-                            initialPoint = Node(e.pos, None, 0)
+                            initialPoint = Node(e.pos, None)
                             nodes.append(initialPoint) # Start in the center
                             initPoseSet = True
                             pygame.draw.circle(screen, red, initialPoint.point, GOAL_RADIUS)
                     elif goalPoseSet == False:
                         print('goal point set: '+str(e.pos))
                         if collides(e.pos) == False:
-                            goalPoint = Node(e.pos,None, 0)
+                            goalPoint = Node(e.pos,None)
                             goalPoseSet = True
                             pygame.draw.circle(screen, green, goalPoint.point, GOAL_RADIUS)
                             currentState = 'buildTree'
