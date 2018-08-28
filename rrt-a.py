@@ -31,9 +31,9 @@ count = 0
 rectObs = []
 
 def dist(p1,p2):    #distance between two points
-    return sqrt((p1[0]-p2[0])*(p1[0]-p2[0])+(p1[1]-p2[1])*(p1[1]-p2[1]))
+	return sqrt((p1[0]-p2[0])*(p1[0]-p2[0])+(p1[1]-p2[1])*(p1[1]-p2[1]))
 	
-def manhattan_dist(p2, p2):
+def manhattan_dist(p1, p2):
 	return abs(p1[0]-p2[0])+abs(p1[1]-p2[1])
 
 def point_circle_collision(p1, p2, radius):
@@ -43,13 +43,13 @@ def point_circle_collision(p1, p2, radius):
     return False
 
 def step_from_to(p1,p2):
-    if dist(p1,p2) < delta:
+    if manhattan_dist(p1,p2) < delta:
         return p2
     else:
         theta = atan2(p2[1]-p1[1],p2[0]-p1[0])
         return p1[0] + delta*cos(theta), p1[1] + delta*sin(theta)
 
-def collides(p):    #check if point collides with the obstacle
+def collides(p):    
     for rect in rectObs:
         if rect.collidepoint(p) == True:
             return True
@@ -126,7 +126,7 @@ def main():
                     rand = get_random_clear()
                     parentNode = nodes[0]
                     for p in nodes:
-                        if dist(p.point,rand) <= dist(parentNode.point,rand):
+                        if manhattan_dist(p.point,rand) <= manhattan_dist(parentNode.point,rand):
                             newPoint = step_from_to(p.point,rand)
                             if collides(newPoint) == False:
                                 parentNode = p
