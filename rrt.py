@@ -23,8 +23,8 @@ screen = pygame.display.set_mode(windowSize)
 white = 255, 255, 255
 black = 25, 25, 25
 red = 255, 0, 0
-blue = 0, 255, 0
-green = 0, 0, 128
+blue = 0, 128, 0
+green = 0, 0, 255
 cyan = 0,180,105
 
 count = 0
