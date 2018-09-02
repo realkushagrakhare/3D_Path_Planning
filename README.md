@@ -20,3 +20,8 @@ would produce a smooth path.<br>
 <li>PyGame & POGL</li>
 <li>Scikit, NumPy, Scipy</li>
 </ul>
+
+##Future works:
+<ul>
+<li>Obstacle collision detection can be parallelized by using CUDA which will make computation a lot faster and applicable in real life scenarios.
+</ul> 

@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.interpolate import splprep, splev
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 pts = np.array([[ 6.55525 ,  3.05472 ],
    [ 6.17284 ,  2.802609],
@@ -52,12 +52,14 @@ pts = np.array([[ 6.55525 ,  3.05472 ],
 
 
 tck, u = splprep(pts.T, u=None, s=0.0, per=1) # Here pts.T means Transpose of the pts.
-print(u.min())
-print(u.max())
-print(tck)
+#print(u.min())
+#print(u.max())
+#print(tck)
 u_new = np.linspace(u.min(), u.max(), 1000)
 x_new, y_new = splev(u_new, tck, der=0)
 
-plt.plot(pts[:,0], pts[:,1], 'ro')
-plt.plot(x_new, y_new, 'b--')
-plt.show()
+x = zip(x_new,y_new)
+print(list(x))
+#plt.plot(pts[:,0], pts[:,1], 'ro')
+#plt.plot(x_new, y_new, 'b--')
+#plt.show()
