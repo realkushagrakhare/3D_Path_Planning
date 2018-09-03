@@ -21,10 +21,13 @@ def collisionFinderCircularObject(p1,p2,data):
 	#y = mx + c.  ax + by + c = 0.
 	# Therefore a = m, b = -1.
 
-	m = (p2.y - p1.y)/(p2.x - p1.x)
+	'''m = (p2.y - p1.y)/(p2.x - p1.x)
 	a = m
 	b = -1
-	c = p2.y - (m*p2.x)
+	c = p2.y - (m*p2.x)'''
+	a = p2.y - p1.y
+	b = -(p2.x-p1.x)
+	c = -b*p2.y - a*p2.x
 
 	distances = []
 	for i in data:
