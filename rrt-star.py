@@ -52,31 +52,51 @@ def collides(p):    #check if point collides with the obstacle
     for rect in rectObs:
         if rect.collidepoint(p) == True:
             return True
-    return False
+    return pointCollides(p)
 	
 def pointCollides(p):
     for circle in obs:
         cen, rad = circle
         if(dist(p,cen)<=rad):
             return True
-    return False
+    return False	
 
+'''def lineRectCollides(p1, p2):
+    a = p2[1] - p1[1]
+    b = -(p2[0] - p1[0])
+    c = -b * p2[1] - a * p2[0]
+    for rect in rectObs:
+        x1, y1 = rect.left, rect.top
+        x2, y2 = rect.width + x1, rect.height + y1
+        if((p1[0] < x1 and p2[0] < x1) or (p1[0] > x2 and p2[0] > x2)):
+            continue
+        elif((p1[1] < y1 and p2[1] < y1) or (p1[1] > y2 and p2[1] > y2)):
+            continue
+        x3 = -(b * y1 + c) / a
+        x4 = -(b * y2 + c) / a
+        y3 = -(a * x1 + c) / b
+        y4 = -(a * x2 + c) / b
+        if(a * y1 >= )
+    return False'''
+	
 def lineCollides(p1, p2):
+    global obs
     a = p2[1] - p1[1]
     b = -(p2[0] - p1[0])
     c = -b * p2[1] - a * p2[0]
     for circle in obs:
         cen, rad = circle
-        val = -(a * cen[0] + b * cen[1] + c) / (a * a + b * b);
+        val = (a * cen[0] + b * cen[1] + c*1.0) / (a * a + b * b);
         h = (val * a) + cen[0]
         k = (val * b) + cen[1]
+        #pygame.draw.circle(screen, (255,255,0), (round(h),round(k)), 1)
         if dist(cen,(h,k)) < rad:
             return True
-        '''else:
-            t1 = (h - p1[0]) / (p2[0] - p1[0])
-            t2 = (k - p1[1]) / (p2[1] - p1[1])
-            if t1 != t2 or t1 < 0 or t1 > 1:
-                return False'''
+        else:
+            t1 = (h - p1[0]) #/ (p2[0] - p1[0])
+            t2 = (k - p1[1]) #/ (p2[1] - p1[1])
+            if t1 * (p2[1] - p1[1]) != t2 * (p2[0] - p1[0]) and (t1 >= 0 and t1 <= (p2[0] - p1[0])):
+                return True
     return False
 
 
@@ -107,14 +127,18 @@ def init_obstacles(configNum):  #initialized the obstacle
 
 def init_circular_obstacles(configNum=0):
     global obs
-    obs.append(((150,100),20))
-    obs.append(((150,130),20))
-    obs.append(((150,160),20))
-    obs.append(((150,190),20))
-    obs.append(((150,220),20))
-    obs.append(((150,255),20))
-    '''obs.append(((150,100),20))
-    obs.append(((200,150),150))'''
+    obs.append(((150,100),18))
+    obs.append(((150,130),18))
+    obs.append(((150,160),18))
+    obs.append(((150,190),18))
+    obs.append(((150,220),18))
+    obs.append(((150,250),18))
+    obs.append(((180,250),20))
+    obs.append(((210,250),20))
+    obs.append(((240,250),20))
+    obs.append(((270,250),20))
+    obs.append(((300,250),20))
+    obs.append(((330,250),20))
     for circ in obs:
         pygame.draw.circle(screen, black, circ[0], circ[1])
 
