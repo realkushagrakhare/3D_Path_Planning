@@ -81,6 +81,7 @@ def pointCollides(p):
 	
 def lineCollides(p1, p2):
     global obs
+    list = []
     a = p2[1] - p1[1]
     b = -(p2[0] - p1[0])
     c = -b * p2[1] - a * p2[0]
@@ -96,7 +97,11 @@ def lineCollides(p1, p2):
             t1 = (h - p1[0]) #/ (p2[0] - p1[0])
             t2 = (k - p1[1]) #/ (p2[1] - p1[1])
             if t1 * (p2[1] - p1[1]) != t2 * (p2[0] - p1[0]) and (t1 >= 0 and t1 <= (p2[0] - p1[0])):
+            #if t1 != t2 and t1 >= 0 and t1 <= 1:
                 return True
+        #list.append((h,k))
+    for i in list:
+        pygame.draw.circle(screen, (255,255,0), (round(i[0]),round(i[1])), 1)
     return False
 
 
@@ -201,7 +206,7 @@ def main():
                 nodes.append(Node(newnode, parentNode,parentNode.cost+dist(newnode,parentNode.point)))
                 pygame.draw.line(screen,cyan,parentNode.point,newnode)
 
-                if point_circle_collision(newnode, goalPoint.point, GOAL_RADIUS):
+                if point_circle_collision(newnode, goalPoint.point, GOAL_RADIUS): #or lineCollides(newnode, parentNode.point, (goalPoint.point, GOAL_RADIUS)):
                     currentState = 'goalFound'
 
                     goalNode = nodes[len(nodes)-1]
