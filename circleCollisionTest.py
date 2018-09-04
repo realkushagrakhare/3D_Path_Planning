@@ -23,10 +23,11 @@ def lineCollides(p1, p2):
     list = []
     a = p2[1] - p1[1]
     b = -(p2[0] - p1[0])
-    c = -b * p2[1] - a * p2[0]
+    c = (-1*b * p2[1]) - (a * p2[0])
     for circle in obs:
         cen, rad = circle
         val = (a * cen[0] + b * cen[1] + c*1.0) / (a * a + b * b);
+        #val = (a * cen[0] + b * cen[1] + c*1.0) / (a * a + b * b);
         h = (val * a) + cen[0]
         k = (val * b) + cen[1]
         #pygame.draw.circle(screen, (255,255,0), (round(h),round(k)), 1)

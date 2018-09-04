@@ -87,23 +87,28 @@ def lineCollides(p1, p2):
     c = -b * p2[1] - a * p2[0]
     for circle in obs:
         cen, rad = circle
-        val = (a * cen[0] + b * cen[1] + c*1.0) / (a * a + b * b);
+        val = (a * cen[0] + b * cen[1] + c*1.0) / (a * a + b * b)
+        val = -val
         h = (val * a) + cen[0]
         k = (val * b) + cen[1]
         #pygame.draw.circle(screen, (255,255,0), (round(h),round(k)), 1)
-        if dist(cen,(h,k)) < rad:
-            return True
-        else:
-            t1 = (h - p1[0]) #/ (p2[0] - p1[0])
-            t2 = (k - p1[1]) #/ (p2[1] - p1[1])
-            if t1 * (p2[1] - p1[1]) != t2 * (p2[0] - p1[0]) and (t1 >= 0 and t1 <= (p2[0] - p1[0])):
-            #if t1 != t2 and t1 >= 0 and t1 <= 1:
+        if dist(cen,(h,k)) < 1.1*rad:
+            if((h<= max(p1[0],p2[0]) and h >= min(p1[0],p2[0])) and (k<= max(p1[1],p2[1]) and k >= min(p1[1],p2[1]))):
                 return True
-        #list.append((h,k))
     for i in list:
         pygame.draw.circle(screen, (255,255,0), (round(i[0]),round(i[1])), 1)
     return False
 
+
+
+#return True
+        #else:
+     #       t1 = (h - p1[0]) #/ (p2[0] - p1[0]) # This is a ratio for interpolation.
+     #      t2 = (k - p1[1]) #/ (p2[1] - p1[1])
+    #        if t1 * (p2[1] - p1[1]) != t2 * (p2[0] - p1[0]) or (t1 >= 0 and t1 <= (p2[0] - p1[0])):
+            #if t1 != t2 and t1 >= 0 and t1 <= 1:
+   #             return True
+        #list.append((h,k))
 
 def get_random_clear():
     while True:
@@ -200,7 +205,7 @@ def main():
 				
                 for p in nodes:
                     if dist(p.point,newnode) + p.cost <= dist(parentNode.point,newnode) + parentNode.cost:
-                            if lineCollides(newPoint,p.point) == False and pointCollides(newPoint) == False:
+                            if lineCollides(newnode,p.point) == False and pointCollides(newnode) == False:
                                 parentNode = p
 				
                 nodes.append(Node(newnode, parentNode,parentNode.cost+dist(newnode,parentNode.point)))
