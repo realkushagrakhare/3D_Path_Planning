@@ -12,7 +12,7 @@ class Node(object):
 XDIM = 720
 YDIM = 500
 windowSize = [XDIM, YDIM]
-delta = 10.0
+delta = 20.0
 GAME_LEVEL = 1
 GOAL_RADIUS = 10
 MIN_DISTANCE_TO_ADD = 1.0
@@ -59,7 +59,7 @@ def pointCollides(p):
         cen, rad = circle
         if(dist(p,cen)<=rad):
             return True
-    return False	
+    return False
 
 '''def lineRectCollides(p1, p2):
     a = p2[1] - p1[1]
@@ -79,15 +79,19 @@ def pointCollides(p):
         if(a * y1 >= )
     return False'''
 	
-def lineCollides(p1, p2):
+def lineCollides(p1, p2, obstacles=None):
     global obs
+    if(obstacles == None):
+        obstacles = obs
+    else:
+        obstacles = [obstacles]
     list = []
     a = p2[1] - p1[1]
     b = -(p2[0] - p1[0])
     c = -b * p2[1] - a * p2[0]
-    for circle in obs:
+    for circle in obstacles:
         cen, rad = circle
-        val = (a * cen[0] + b * cen[1] + c*1.0) / (a * a + b * b)
+        val = (a * cen[0] + b * cen[1] + c * 1.0) / (a * a + b * b)
         val = -val
         h = (val * a) + cen[0]
         k = (val * b) + cen[1]
@@ -143,12 +147,23 @@ def init_circular_obstacles(configNum=0):
     obs.append(((150,190),18))
     obs.append(((150,220),18))
     obs.append(((150,250),18))
-    obs.append(((180,250),20))
-    obs.append(((210,250),20))
-    obs.append(((240,250),20))
-    obs.append(((270,250),20))
-    obs.append(((300,250),20))
-    obs.append(((330,250),20))
+    obs.append(((180,250),18))
+    obs.append(((210,250),18))
+    obs.append(((240,250),18))
+    obs.append(((270,250),18))
+    obs.append(((300,250),18))
+    obs.append(((330,250),18))
+    obs.append(((330,220),18))
+    obs.append(((330,190),18))
+    obs.append(((330,160),18))
+    obs.append(((330,130),18))
+    obs.append(((330,100),18))
+    obs.append(((300,100),18))
+    obs.append(((270,100),18))
+    obs.append(((240,100),18))
+    obs.append(((240,130),18))
+    obs.append(((240,160),18))
+    obs.append(((240,190),18))
     for circ in obs:
         pygame.draw.circle(screen, black, circ[0], circ[1])
 
@@ -188,6 +203,8 @@ def main():
             pass
         elif currentState == 'buildTree':
             count = count+1
+            '''if(count%500==0):
+                print(count)'''
             pygame.display.set_caption('Performing RRT')
             if count < NUMNODES:
                 foundNext = False
@@ -202,20 +219,26 @@ def main():
                                 foundNext = True
 
                 newnode = step_from_to(parentNode.point,rand)
-				
+                if(dist(parentNode.point, newnode) <= GOAL_RADIUS):
+                    foundNext = False
+                    continue
                 for p in nodes:
                     if dist(p.point,newnode) + p.cost <= dist(parentNode.point,newnode) + parentNode.cost:
                             if lineCollides(newnode,p.point) == False and pointCollides(newnode) == False:
                                 parentNode = p
 				
                 nodes.append(Node(newnode, parentNode,parentNode.cost+dist(newnode,parentNode.point)))
-                pygame.draw.line(screen,cyan,parentNode.point,newnode)
+                #pygame.draw.line(screen,cyan,parentNode.point,newnode)
 
-                if point_circle_collision(newnode, goalPoint.point, GOAL_RADIUS): #or lineCollides(newnode, parentNode.point, (goalPoint.point, GOAL_RADIUS)):
+                if point_circle_collision(newnode, goalPoint.point, GOAL_RADIUS) or lineCollides(newnode, parentNode.point, (goalPoint.point, GOAL_RADIUS)):
                     currentState = 'goalFound'
-
-                    goalNode = nodes[len(nodes)-1]
-
+                    goalNode = goalPoint
+                    goalNode.parent = parentNode
+                    goalNode.cost = parentNode.cost + dist(goalNode.point, parentNode.point)
+                    print(goalNode.cost)
+                    #goalNode = nodes[len(nodes)-1]
+                else:
+                    pygame.draw.line(screen,cyan,parentNode.point,newnode)
                 
             else:
                 print("Ran out of nodes... :(")
