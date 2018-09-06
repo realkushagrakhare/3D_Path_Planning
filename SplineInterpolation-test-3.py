@@ -2,6 +2,15 @@ import numpy as np
 from scipy.interpolate import splprep, splev
 #import matplotlib.pyplot as plt
 
+def fitSpline(points):
+	pts = np.array(points)
+	tck, u = splprep(pts.T, u=None, s=0.0, per=1)
+	u_new = np.linspace(u.min(), u.max(), 1000)
+	x_new, y_new = splev(u_new, tck, der=0)
+	return list(zip(x_new,y_new))
+	
+
+
 pts = np.array([[ 6.55525 ,  3.05472 ],
    [ 6.17284 ,  2.802609],
    [ 5.53946 ,  2.649209],
