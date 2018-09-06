@@ -12,8 +12,11 @@ to be pruned and smoothed. An approach could be to fit a spline over the points 
 would produce a smooth path.<br>
 <br>
 <b> Developers: </b> Kushagra Khare, Rachit Jain <br>
-<b> Mentors: </b> Prof. Srisha Rao, IIIT-B <br>
-<b> Project Duration: </b> Aug 18 - Dec 18 <br>
+<b> Mentor: </b> Prof. Srisha Rao, IIIT-B <br>
+<b> Project Duration: </b> Aug '18 - Nov '18 <br>
+
+## Goal
+In this project, we aim to provide an algorithm for 3D Path Planning. We will implement a RRT-A* based 3D Path Planning algorithm. The algorithm would include path pruning with constraint satisfaction and account for non-holonomic constraints. We will go ahead with Manhattan based RRT-A* in the initial stages but will also try to find an optimized distance metric function using Voronoi bias property for the algorithm.
 
 ## Technologies used:
 <ul>
