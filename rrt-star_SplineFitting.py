@@ -37,7 +37,7 @@ obs = []
 
 def fitSpline(points):
 	pts = np.array(points)
-	tck, u = splprep(pts.T, u=None, s=0.0, per=1, k=1)
+	tck, u = splprep(pts.T, u=None, s=0.0, per=1, k=2)
 	u_new = np.linspace(u.min(), u.max(), 1000)
 	x_new, y_new = splev(u_new, tck, der=0)
 	return list(zip(x_new,y_new))
@@ -191,8 +191,9 @@ def main():
                 path.append(currNode.point)
             optimizePhase = True
             currentState = 'optimize'
+            path.append(currNode.point)
             #path.reverse()
-            #print(path)
+            print(path)
         elif currentState == 'optimize':
             splinePts = fitSpline(path)
             drawPath(splinePts)
