@@ -37,14 +37,14 @@ obs = []
 
 def fitSpline(points):
     pts = np.array(points)
-    print("points",pts.T)
+    #print("points",pts.T)
     #pts = np.delete(pts,-1)
-    print("x = ",pts.T[:][0])
+    #print("x = ",pts.T[:][0])
     x1 = pts.T[:][0]
     y1 = pts.T[:][1]
-    print("x1 = ",x1.T)
-    print("shape x:- ",np.shape(x1))
-    print("shape y:- ",np.shape(y1))
+    #print("x1 = ",x1.T)
+    #print("shape x:- ",np.shape(x1))
+    #print("shape y:- ",np.shape(y1))
     x1 = x1[::-1]
     y1 = y1[::-1]    
     #tck, u = splprep(pts.T, u=None, s=0.0, per=1, k=3)
@@ -53,9 +53,9 @@ def fitSpline(points):
     #tck,u = splprep(pts.T, s=0.0, k=3,per = 0)
     #u_new = np.linspace(u.min(), u.max(), 1000)
     u_new = np.arange(x1[0], x1[len(x1)-1]+1,0.1)
-    print(x1[0])
-    print(x1[len(x1)-1] +1 )
-    print(u_new)
+    #print(x1[0])
+    #print(x1[len(x1)-1] +1 )
+    #print(u_new)
     #u_new = np.arange(pts.T[0][0], pts.T[len[pts]-1][0],0.001)
     #x_new, y_new = splev(u_new, tck, der=0)
     y_new = splev(u_new, tck, der=0)
