@@ -1,4 +1,4 @@
-import math, sys, pygame, random
+import math, sys, pygame, random, time
 import numpy as np
 from scipy.interpolate import splprep, splev,splrep
 from math import *
@@ -48,7 +48,7 @@ def fitSpline(points):
     x1 = x1[::-1]
     y1 = y1[::-1]    
     #tck, u = splprep(pts.T, u=None, s=0.0, per=1, k=3)
-    tck = splrep(x1,y1, s=1,  k=3)
+    tck = splrep(x1,y1, s=1,  k=2)
     #tck,u = splprep(pts.T[:][0],pts.T[:][1], s=1, k=3)
     #tck,u = splprep(pts.T, s=0.0, k=3,per = 0)
     #u_new = np.linspace(u.min(), u.max(), 1000)
@@ -261,7 +261,8 @@ def main():
                             if lineCollides(newnode,p.point) == False and pointCollides(newnode) == False:
                                 parentNode = p
 				
-                nodes.append(Node(newnode, parentNode,parentNode.cost+dist(newnode,parentNode.point)))
+                newNode = Node(newnode, parentNode,parentNode.cost+dist(newnode,parentNode.point))
+                nodes.append(newNode)
                 #pygame.draw.line(screen,cyan,parentNode.point,newnode)
 
                 if point_circle_collision(newnode, goalPoint.point, GOAL_RADIUS) or lineCollides(newnode, parentNode.point, (goalPoint.point, GOAL_RADIUS)):
@@ -270,6 +271,15 @@ def main():
                     goalNode.parent = parentNode
                     goalNode.cost = parentNode.cost + dist(goalNode.point, parentNode.point)
                     print(goalNode.cost)
+                    #goalNode = nodes[len(nodes)-1]
+                elif(lineCollides(newnode, goalPoint.point) == False):
+                    currentState = 'goalFound'
+                    goalNode = goalPoint
+                    goalNode.parent = newNode
+                    goalNode.cost = newNode.cost + dist(goalNode.point, newNode.point)
+                    print(goalNode.cost, "Two Phase Sampling")
+                    pygame.draw.line(screen,red,newnode,goalNode.point)
+                    pygame.draw.line(screen,cyan,newnode,parentNode.point)
                     #goalNode = nodes[len(nodes)-1]
                 else:
                     pygame.draw.line(screen,cyan,parentNode.point,newnode)
