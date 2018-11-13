@@ -17,7 +17,7 @@ class RRT():
     """
 
     def __init__(self, start, goal, obstacleList, randArea,
-                 goalSampleRate=10, maxIter=400):
+                 goalSampleRate=10, maxIter=150):
         """
         Setting Parameter
         start:Start Position [x,y]
@@ -298,13 +298,13 @@ def main():
     start = [0.0, 0.0, np.deg2rad(0.0)]
     goal = [6.0, 7.0, np.deg2rad(90.0)]
 
-    rrt = RRT(start, goal, randArea=[-2.0, 15.0], obstacleList=obstacleList)
+    rrt = RRT(start, goal, randArea=[-2.0, 14.0], obstacleList=obstacleList)
     path = rrt.Planning(animation=show_animation)
 
     # Draw final path
     if show_animation:
         rrt.DrawGraph()
-        plt.plot([x for (x, y) in path], [y for (x, y) in path], '-r')
+        #plt.plot([x for (x, y) in path], [y for (x, y) in path], '-r')
         plt.grid(True)
         #plt.pause(0.001)
         plt.show()

@@ -30,8 +30,8 @@ green = 0, 0, 255
 cyan = 0,180,105
 
 show_animation = True
-STEP_SIZE = 0.1
-curvature = 50.0
+STEP_SIZE = 10
+curvature = 0.25
 
 count = 0
 obs = []
@@ -99,7 +99,7 @@ class RRT():
     """
 
     def __init__(self, start, goal, obstacleList, randArea,
-                 goalSampleRate=10, maxIter=400):
+                 goalSampleRate=10, maxIter=120):
         """
         Setting Parameter
         start:Start Position [x,y]
@@ -123,6 +123,13 @@ class RRT():
 
         self.nodeList = [self.start]
         for i in range(self.maxIter):
+            if(i%10==0):
+                print("Planning path",i)
+			
+            for e in pygame.event.get():
+                if e.type == QUIT or (e.type == KEYUP and e.key == K_ESCAPE):
+                    sys.exit("Exiting")
+
             rnd = self.get_random_point()
             nind = self.GetNearestListIndex(self.nodeList, rnd)
 
@@ -140,12 +147,14 @@ class RRT():
 
             if animation and i % 5 == 0:
                 self.DrawGraph(rnd=rnd)
+            #if(newNode.)
 
         # generate coruse
         lastIndex = self.get_best_last_index()
         if lastIndex is None:
             return None
         path = self.gen_final_course(lastIndex)
+        print("Path planning done")
         return path
 
     def choose_parent(self, newNode, nearinds):
@@ -376,23 +385,19 @@ def main():
             pygame.display.set_caption('Select Starting Point and then Goal Point')
             fpsClock.tick(10)
         elif currentState == 'goalFound':
-            currNode = goalNode.parent
             pygame.display.set_caption('Goal Reached')
-            
-            while currNode.parent != None:
-                pygame.draw.line(screen,red,currNode.point,currNode.parent.point)
-                currNode = currNode.parent
+            rrt.DrawGraph()
+            for i in range(1, len(path)):
+                pygame.draw.line(screen, red, path[i-1], path[i])
             optimizePhase = True
         elif currentState == 'optimize':
-            #fpsClock.tick(0.5)
+            fpsClock.tick(0.5)
             pass
         elif currentState == 'buildTree':
-            rrt.DrawGraph()
-            plt.plot([x for (x, y) in path], [y for (x, y) in path], '-r')
-            plt.grid(True)
-            plt.pause(0.001)
-            plt.show()
-            currentState = 'goalFound'
+            rrt = RRT((initialPoint.x, initialPoint.y, initialPoint.yaw), (goalPoint.x, goalPoint.y, goalPoint.yaw), randArea=[0, 500], obstacleList=obs)
+            path = rrt.Planning(True)
+            if(path != None):
+                currentState = 'goalFound'
 
         for e in pygame.event.get():
             if e.type == QUIT or (e.type == KEYUP and e.key == K_ESCAPE):
@@ -414,10 +419,8 @@ def main():
                             goalPoint = Node(e.pos[0], e.pos[1], np.deg2rad(90.0))
                             goalPoseSet = True
                             pygame.draw.circle(screen, green, (goalPoint.x, goalPoint.y), GOAL_RADIUS)
-                            pygame.display.update()
+                            #pygame.display.update()
                             currentState = 'buildTree'
-                            rrt = RRT((initialPoint.x, initialPoint.y, initialPoint.yaw), (goalPoint.x, goalPoint.y, goalPoint.yaw), randArea=[0, 500], obstacleList=obs)
-                            path = rrt.Planning(True)
                 else:
                     currentState = 'init'
                     initPoseSet = False
