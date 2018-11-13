@@ -30,7 +30,7 @@ green = 0, 0, 255
 cyan = 0,180,105
 
 show_animation = True
-STEP_SIZE = 10
+STEP_SIZE = 2
 curvature = 0.25
 
 count = 0
@@ -416,7 +416,7 @@ def main():
                     elif goalPoseSet == False:
                         print('goal point set: '+str(e.pos))
                         if collides(e.pos) == False:
-                            goalPoint = Node(e.pos[0], e.pos[1], np.deg2rad(90.0))
+                            goalPoint = Node(e.pos[0], e.pos[1], np.deg2rad(0.0))
                             goalPoseSet = True
                             pygame.draw.circle(screen, green, (goalPoint.x, goalPoint.y), GOAL_RADIUS)
                             #pygame.display.update()
