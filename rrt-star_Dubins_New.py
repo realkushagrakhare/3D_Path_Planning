@@ -416,7 +416,7 @@ def main():
                     elif goalPoseSet == False:
                         print('goal point set: '+str(e.pos))
                         if collides(e.pos) == False:
-                            goalPoint = Node(e.pos[0], e.pos[1], np.deg2rad(0.0))
+                            goalPoint = Node(e.pos[0], e.pos[1], np.deg2rad(90.0))
                             goalPoseSet = True
                             pygame.draw.circle(screen, green, (goalPoint.x, goalPoint.y), GOAL_RADIUS)
                             #pygame.display.update()

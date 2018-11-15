@@ -230,7 +230,7 @@ def main():
             #print(path)
         elif currentState == 'optimize':
             prunedPath = pruneNodes(path)
-            drawPath(prunedPath)
+            #drawPath(prunedPath)
             splinePts = fitSpline(path)
             drawPath(splinePts, green)
             fpsClock.tick(0.5)

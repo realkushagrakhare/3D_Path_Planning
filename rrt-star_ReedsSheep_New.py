@@ -31,7 +31,7 @@ cyan = 0,180,105
 
 show_animation = True
 STEP_SIZE = 2
-curvature = 0.25
+curvature = 0.05
 
 count = 0
 obs = []
