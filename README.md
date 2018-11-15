@@ -29,7 +29,7 @@ metric function using Voronoi bias property for the algorithm.
 </ul>
 
 ## Milestones
-![Milestone 1](Screenshots/RRT.jpg?raw=true "Title")
+![Milestone 1](Screenshots/RRT.JPG)
 
 ## Future works:
 <ul>
