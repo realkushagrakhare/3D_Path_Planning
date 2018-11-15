@@ -29,7 +29,17 @@ metric function using Voronoi bias property for the algorithm.
 </ul>
 
 ## Milestones
-![Milestone 1](Screenshots/RRT.JPG)
+### Week 1
+<ul>
+<li>Implemented a basic Random-exploring Random Tree algorithm using PyGame.</li>
+<li>Read about various types of RRTs and implemented RRT-A* vartion. Compared its pros and 
+cons with the basic algorithm</li>
+</ul>
+
+![RRT](Screenshots/RRT.JPG)
+
+![RRT-A*](Screenshots/RRT-A_Star.JPG)
+
 
 ## Future works:
 <ul>
