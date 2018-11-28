@@ -40,8 +40,41 @@ cons with the basic algorithm</li>
 
 ![RRT-A*](Screenshots/RRT-A_Star.JPG)
 
+### Week 2
+<ul>
+<li>Implemented RRT* which results into asymptotically optimum solution.</li>
+</ul>
+
+![RRT*](Screenshots/RRT-star_2.JPG)
+
+### Week 4
+<ul>
+<li>Added Node Pruning and Spline Fitting in RRT* pipeline.</li>
+<li>Later we realized that node pruning is not needed for RRT* as probability of pruning a path of RRT* is nearly 0.04.</li>
+</ul>
+
+![Spline Fitting](Screenshots/RRT-star_SplineFitting.JPG)
+
+![Node Pruning](Screenshots/RRT-star_SplineFitting_NodePruning.JPG)
+
+### Week 5
+<ul>
+<li>Implemented 2-Phase Sampling making the algorithm faster.</li>
+</ul>
+
+![Two Phase Sampling](Screenshots/RRT-star_SplineFitting_TwoPhaseSampling.JPG)
+
+### Week 7
+<ul>
+<li>Combined Dubins and Reeds-Shepp Path Planning algorithms with RRT* for non-holonomic constraints.</li>
+</ul>
+
+![RRT*-Reeds-Sheep](Screenshots/RRT-star_ReedsSheepPlanning.JPG)
+
+![RRT*-Dubins](Screenshots/RRT-star_DubinsPathPlanning.JPG)
 
 ## Future works:
 <ul>
 <li>Obstacle collision detection can be parallelized by using CUDA which will make computation a lot faster and applicable in real life scenarios.
+<li>Including various other non-holonomic constraints like velocity, size of robot(or car).
 </ul> 
