@@ -28,6 +28,12 @@ metric function using Voronoi bias property for the algorithm.
 <li>Scikit, NumPy, Scipy</li>
 </ul>
 
+## Running Requirements
+<ul>
+<li> Python 3.7</li>
+<li> Pygame and Scipy </li>
+</ul>
+
 ## Milestones
 ### Week 1
 <ul>
